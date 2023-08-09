@@ -22,6 +22,7 @@ type Authenticator interface {
 }
 
 type Storage interface {
+	AllocateNewFile(ctx context.Context, name, mime string, access []string) (id string, err error)
 }
 
 func (s *Service) Start(auth Authenticator, storage Storage) {

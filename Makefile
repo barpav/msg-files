@@ -21,6 +21,18 @@ user:
 	localhost:8081
 session:
 	curl -v -X POST -H "Authorization: Basic amFuZTpNeTFzdEdvb2RQYXNzd29yZA==" localhost:8082
+# make file KEY=session-key
+file:
+	curl -v -X POST -H "Authorization: Bearer $(KEY)" \
+	-H "Content-Type: application/vnd.newPrivateFile.v1+json" \
+	-d '{"name": "test.jpg", "mime": "image/jpeg", "access": ["john", "alice", "bob"]}' \
+	localhost:8080
+# make file-pub KEY=session-key
+file-pub:
+	curl -v -X POST -H "Authorization: Bearer $(KEY)" \
+	-H "Content-Type: application/vnd.newPublicFile.v1+json" \
+	-d '{"name": "test.jpg", "mime": "image/jpeg"}' \
+	localhost:8080
 
 push:
 	sudo docker push ghcr.io/barpav/msg-files:v1
