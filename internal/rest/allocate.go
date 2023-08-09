@@ -41,7 +41,7 @@ func (s *Service) allocateNewFile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var id string
-	id, err = s.storage.AllocateNewFile(r.Context(), name, mime, access)
+	id, err = s.storage.AllocateNewFile(r.Context(), authenticatedUser(r), name, mime, access)
 
 	if err != nil {
 		logAndReturnErrorWithIssue(w, r, err, "Failed to allocate new file")

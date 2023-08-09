@@ -9,14 +9,15 @@ import (
 )
 
 type AllocatedFile struct {
+	Owner  string
 	Name   string
 	Mime   string
 	Access []string
 }
 
-func (s *Storage) AllocateNewFile(ctx context.Context, name, mime string, access []string) (id string, err error) {
+func (s *Storage) AllocateNewFile(ctx context.Context, owner, name, mime string, access []string) (id string, err error) {
 	var result *mongo.InsertOneResult
-	result, err = s.allocatedFiles.InsertOne(ctx, AllocatedFile{Name: name, Mime: mime, Access: access})
+	result, err = s.allocatedFiles.InsertOne(ctx, AllocatedFile{Owner: owner, Name: name, Mime: mime, Access: access})
 
 	if err != nil {
 		return "", err
