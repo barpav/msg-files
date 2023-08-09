@@ -7,19 +7,41 @@ import (
 
 	"github.com/rs/zerolog/log"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/gridfs"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 type Storage struct {
-	cfg    *Config
-	client *mongo.Client
+	cfg            *Config
+	client         *mongo.Client
+	db             *mongo.Database
+	allocatedFiles *mongo.Collection
+	bucket         *gridfs.Bucket
 }
+
+const (
+	dbName                       = "msg"
+	allocatedFilesCollectionName = "allocatedFiles"
+)
 
 func (s *Storage) Open() (err error) {
 	s.cfg = &Config{}
 	s.cfg.Read()
-	return s.connectToDatabase()
+
+	err = s.connectToDatabase()
+
+	if err != nil {
+		return err
+	}
+
+	s.db = s.client.Database(dbName)
+
+	s.allocatedFiles = s.db.Collection(allocatedFilesCollectionName)
+
+	s.bucket, err = gridfs.NewBucket(s.db)
+
+	return err
 }
 
 func (s *Storage) Close(ctx context.Context) (err error) {
