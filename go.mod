@@ -8,6 +8,7 @@ require (
 	github.com/rs/zerolog v1.30.0
 	go.elastic.co/ecszerolog v0.1.0
 	go.mongodb.org/mongo-driver v1.12.1
+	golang.org/x/exp v0.0.0-20230810033253-352e893a4cad
 )
 
 require (

@@ -4,19 +4,14 @@ import (
 	"context"
 	"errors"
 
+	"github.com/barpav/msg-files/internal/rest/models"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type AllocatedFile struct {
-	Name   string
-	Mime   string
-	Access []string
-}
-
-func (s *Storage) AllocateNewFile(ctx context.Context, name, mime string, access []string) (id string, err error) {
+func (s *Storage) AllocateNewFile(ctx context.Context, fileInfo *models.AllocatedFile) (id string, err error) {
 	var result *mongo.InsertOneResult
-	result, err = s.allocatedFiles.InsertOne(ctx, AllocatedFile{Name: name, Mime: mime, Access: access})
+	result, err = s.allocatedFiles.InsertOne(ctx, fileInfo)
 
 	if err != nil {
 		return "", err

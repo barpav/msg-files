@@ -17,12 +17,14 @@ type Storage struct {
 	client         *mongo.Client
 	db             *mongo.Database
 	allocatedFiles *mongo.Collection
+	files          *mongo.Collection
 	bucket         *gridfs.Bucket
 }
 
 const (
 	dbName                       = "msg"
 	allocatedFilesCollectionName = "allocatedFiles"
+	filesCollectionName          = "fs.files"
 )
 
 func (s *Storage) Open() (err error) {
@@ -40,6 +42,8 @@ func (s *Storage) Open() (err error) {
 	s.allocatedFiles = s.db.Collection(allocatedFilesCollectionName)
 
 	s.bucket, err = gridfs.NewBucket(s.db)
+
+	s.files = s.db.Collection(filesCollectionName)
 
 	return err
 }
