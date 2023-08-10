@@ -8,11 +8,8 @@ import (
 
 // https://barpav.github.io/msg-api-spec/#/files/post_files
 func (s *Service) allocateNewFile(w http.ResponseWriter, r *http.Request) {
-	var (
-		name, mime string
-		access     []string
-		err        error
-	)
+	var err error
+	newFile := models.AllocatedFile{}
 
 	switch r.Header.Get("Content-Type") {
 	case "application/vnd.newPrivateFile.v1+json":
@@ -24,7 +21,7 @@ func (s *Service) allocateNewFile(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		name, mime, access = fileDesc.Name, fileDesc.Mime, fileDesc.Access
+		newFile.Name, newFile.Mime, newFile.Access = fileDesc.Name, fileDesc.Mime, fileDesc.Access
 	case "application/vnd.newPublicFile.v1+json":
 		fileDesc := models.NewPublicFileV1{}
 		err = fileDesc.Deserialize(r.Body)
@@ -34,14 +31,16 @@ func (s *Service) allocateNewFile(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		name, mime = fileDesc.Name, fileDesc.Mime
+		newFile.Name, newFile.Mime = fileDesc.Name, fileDesc.Mime
 	default:
 		w.WriteHeader(http.StatusUnsupportedMediaType)
 		return
 	}
 
+	newFile.Owner = authenticatedUser(r)
+
 	var id string
-	id, err = s.storage.AllocateNewFile(r.Context(), authenticatedUser(r), name, mime, access)
+	id, err = s.storage.AllocateNewFile(r.Context(), &newFile)
 
 	if err != nil {
 		logAndReturnErrorWithIssue(w, r, err, "Failed to allocate new file")

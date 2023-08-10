@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/barpav/msg-files/internal/rest/models"
 	"github.com/go-chi/chi/v5"
 	"github.com/rs/zerolog/log"
 )
@@ -22,7 +23,7 @@ type Authenticator interface {
 }
 
 type Storage interface {
-	AllocateNewFile(ctx context.Context, owner, name, mime string, access []string) (id string, err error)
+	AllocateNewFile(ctx context.Context, info *models.AllocatedFile) (id string, err error)
 }
 
 func (s *Service) Start(auth Authenticator, storage Storage) {
