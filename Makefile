@@ -33,6 +33,12 @@ file-pub:
 	-H "Content-Type: application/vnd.newPublicFile.v1+json" \
 	-d '{"name": "test.jpg", "mime": "image/jpeg"}' \
 	localhost:8080
+# make upload KEY=session-key ID=allocated-file-id
+upload:
+	curl -v -X POST -H "Authorization: Bearer $(KEY)" \
+	-H "Content-Type: application/octet-stream" \
+	-d @Makefile \
+	"localhost:8080/$(ID)"
 
 push:
 	sudo docker push ghcr.io/barpav/msg-files:v1

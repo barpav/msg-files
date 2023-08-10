@@ -3,6 +3,7 @@ package rest
 import (
 	"context"
 	"fmt"
+	"io"
 	"net/http"
 
 	"github.com/barpav/msg-files/internal/rest/models"
@@ -24,6 +25,9 @@ type Authenticator interface {
 
 type Storage interface {
 	AllocateNewFile(ctx context.Context, info *models.AllocatedFile) (id string, err error)
+	AllocatedFileInfo(ctx context.Context, id string) (info *models.AllocatedFile, err error)
+	UploadFileContent(id string, content io.Reader) error
+	FileContentUploaded(ctx context.Context, id string) (bool, error)
 }
 
 func (s *Service) Start(auth Authenticator, storage Storage) {
