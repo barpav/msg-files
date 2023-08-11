@@ -39,6 +39,14 @@ upload:
 	-H "Content-Type: application/octet-stream" \
 	-d @Makefile \
 	"localhost:8080/$(ID)"
+# make get-info KEY=session-key ID=file-id
+get-info:
+	curl -I -H "Authorization: Bearer $(KEY)" \
+	"localhost:8080/$(ID)"
+# make download KEY=session-key ID=file-id
+download:
+	curl -v -H "Authorization: Bearer $(KEY)" \
+	"localhost:8080/$(ID)"
 
 push:
 	sudo docker push ghcr.io/barpav/msg-files:v1
