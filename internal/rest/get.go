@@ -33,6 +33,11 @@ func (s *Service) getFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if fileSize == 0 { // allocated but not uploaded
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
 	w.Header().Set("Content-Type", info.Mime)
 	w.Header().Set("Content-Disposition", fmt.Sprintf(`attachment; filename="%s"`, info.Name))
 	w.Header().Set("Content-Length", fmt.Sprintf("%d", fileSize))
