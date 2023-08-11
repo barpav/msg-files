@@ -35,15 +35,15 @@ func (s *Service) uploadNewFileContent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var alreadyUploaded bool
-	alreadyUploaded, err = s.storage.FileContentUploaded(ctx, id)
+	var fileSize int
+	fileSize, err = s.storage.FileSize(ctx, id)
 
 	if err != nil {
 		logAndReturnErrorWithIssue(w, r, err, "Failed to receive file upload status")
 		return
 	}
 
-	if alreadyUploaded {
+	if fileSize != 0 { // already uploaded
 		w.WriteHeader(http.StatusConflict)
 		return
 	}

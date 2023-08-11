@@ -27,7 +27,8 @@ type Storage interface {
 	AllocateNewFile(ctx context.Context, info *models.AllocatedFile) (id string, err error)
 	AllocatedFileInfo(ctx context.Context, id string) (info *models.AllocatedFile, err error)
 	UploadFileContent(id string, content io.Reader) error
-	FileContentUploaded(ctx context.Context, id string) (bool, error)
+	FileSize(ctx context.Context, id string) (size int, err error)
+	DownloadFile(id string, stream io.Writer) error
 }
 
 func (s *Service) Start(auth Authenticator, storage Storage) {
