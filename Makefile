@@ -47,6 +47,10 @@ get-info:
 download:
 	curl -v -H "Authorization: Bearer $(KEY)" \
 	"localhost:8080/$(ID)"
+# make delete KEY=session-key ID=file-id
+delete:
+	curl -v -X DELETE -H "Authorization: Bearer $(KEY)" \
+	"localhost:8080/$(ID)"
 
 push:
 	sudo docker push ghcr.io/barpav/msg-files:v1
