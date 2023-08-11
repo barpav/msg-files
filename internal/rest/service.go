@@ -29,6 +29,7 @@ type Storage interface {
 	UploadFileContent(id string, content io.Reader) error
 	FileSize(ctx context.Context, id string) (size int, err error)
 	DownloadFile(id string, stream io.Writer) error
+	DeleteFile(ctx context.Context, id string) error
 }
 
 func (s *Service) Start(auth Authenticator, storage Storage) {
