@@ -27,7 +27,7 @@ func (c *config) read() {
 	readSetting(envVarHost, defaultHost, &c.host)
 	readSetting(envVarPort, defaultPort, &c.port)
 	readSetting(envVarPort, defaultUser, &c.user)
-	readSetting(envVarPort, defaultPort, &c.password)
+	readSetting(envVarPort, defaultPassword, &c.password)
 }
 
 func readSetting(setting, defaultValue string, result *string) {
