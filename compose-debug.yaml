@@ -6,12 +6,15 @@ services:
     environment:
       - MSG_STORAGE_HOST=storage-users-v1
       - MSG_SESSIONS_HOST=sessions-v1
+      - MSG_FILES_STAT_HOST=broker
     ports:
       - 8081:8080
     expose:
       - 9000
     depends_on:
       storage-users-v1:
+        condition: service_healthy
+      broker:
         condition: service_healthy
 
   storage-users-v1:

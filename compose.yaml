@@ -5,6 +5,7 @@ services:
     container_name: msg-users-v1
     environment:
       - MSG_STORAGE_HOST=storage-users-v1
+      - MSG_SESSIONS_HOST=sessions-v1
       - MSG_FILES_STAT_HOST=broker
     ports:
       - 8081:8080
