@@ -73,3 +73,22 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+  broker:
+    image: rabbitmq:3.9.29-alpine
+    container_name: msg-broker
+    ports:
+    - 5672:5672
+    - 15672:15672
+    expose:
+      - 5672
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1G

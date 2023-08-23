@@ -5,6 +5,7 @@ go 1.20
 require (
 	github.com/barpav/msg-sessions v0.0.0-20230729162901-f8c9132b6abe
 	github.com/go-chi/chi/v5 v5.0.10
+	github.com/rabbitmq/amqp091-go v1.8.1
 	github.com/rs/zerolog v1.30.0
 	go.elastic.co/ecszerolog v0.1.0
 	go.mongodb.org/mongo-driver v1.12.1

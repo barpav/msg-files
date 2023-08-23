@@ -37,13 +37,21 @@ func (s *Service) allocateNewFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	ctx := r.Context()
 	newFile.Owner = authenticatedUser(r)
 
 	var id string
-	id, err = s.storage.AllocateNewFile(r.Context(), &newFile)
+	id, err = s.storage.AllocateNewFile(ctx, &newFile)
 
 	if err != nil {
 		logAndReturnErrorWithIssue(w, r, err, "Failed to allocate new file")
+		return
+	}
+
+	err = s.storage.MarkAsUnused(ctx, id)
+
+	if err != nil {
+		logAndReturnErrorWithIssue(w, r, err, "Failed to mark new allocated file as unused")
 		return
 	}
 

@@ -11,6 +11,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"go.elastic.co/ecszerolog"
 
+	"github.com/barpav/msg-files/internal/cleaner"
 	"github.com/barpav/msg-files/internal/data"
 	"github.com/barpav/msg-files/internal/rest"
 	sessions "github.com/barpav/msg-sessions/grpc_client"
@@ -46,6 +47,7 @@ type microservice struct {
 		sessions *sessions.Client // github.com/barpav/msg-sessions
 	}
 	storage  *data.Storage
+	gc       *cleaner.GarbageCollector
 	shutdown chan os.Signal
 }
 
@@ -55,6 +57,9 @@ func (m *microservice) launch() (err error) {
 
 	m.storage = &data.Storage{}
 	err = errors.Join(err, m.storage.Open())
+
+	m.gc = &cleaner.GarbageCollector{}
+	err = errors.Join(err, m.gc.Start(m.storage))
 
 	m.clients.sessions = &sessions.Client{}
 	err = errors.Join(err, m.clients.sessions.Connect())
@@ -82,6 +87,7 @@ func (m *microservice) serveAndShutdownGracefully() (err error) {
 
 	err = errors.Join(err, m.api.public.Stop(ctx))
 	err = errors.Join(err, m.clients.sessions.Disconnect(ctx))
+	err = errors.Join(err, m.gc.Stop(ctx))
 	err = errors.Join(err, m.storage.Close(ctx))
 
 	return err
