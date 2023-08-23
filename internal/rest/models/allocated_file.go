@@ -7,6 +7,7 @@ type AllocatedFile struct {
 	Name   string
 	Mime   string
 	Access []string
+	Uses   int
 }
 
 func (f *AllocatedFile) HasAccess(user string) bool {
