@@ -1,5 +1,7 @@
 github.com/barpav/msg-sessions v0.0.0-20230729162901-f8c9132b6abe h1:Ryc2S/CBcGnFKKj4hbcPsv/IwNQRlq1jTavDDQW3zLo=
 github.com/barpav/msg-sessions v0.0.0-20230729162901-f8c9132b6abe/go.mod h1:fmz+s2TErxJWJdWX7OJcyi68ZM1YDlA5Das/tQeEc68=
+github.com/barpav/msg-sessions v0.0.0-20230828114848-7c2857180271 h1:8PpWKbM+86lEdzwovwIQ4P6y/vwayYL/aoDQvP1Dm4M=
+github.com/barpav/msg-sessions v0.0.0-20230828114848-7c2857180271/go.mod h1:fmz+s2TErxJWJdWX7OJcyi68ZM1YDlA5Das/tQeEc68=
 github.com/coreos/go-systemd v0.0.0-20190321100706-95778dfbb74e/go.mod h1:F5haX7vjVVG0kc13fIWeqUViNPyEJxv/OmvnBo0Yme4=
 github.com/coreos/go-systemd/v22 v22.5.0/go.mod h1:Y58oyj3AT4RCenI/lSvhwexgC+NSVTIJ3seZv2GcEnc=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
