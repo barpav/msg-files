@@ -13,7 +13,7 @@ func (s *Service) traceInternalServerError(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if rec := recover(); rec != nil {
-				err := fmt.Errorf("recovered form panic: %v", rec)
+				err := fmt.Errorf("recovered from panic: %v", rec)
 				logAndReturnErrorWithIssue(w, r, err, "Internal server error")
 			}
 		}()
