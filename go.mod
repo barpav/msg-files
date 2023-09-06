@@ -3,7 +3,7 @@ module github.com/barpav/msg-files
 go 1.20
 
 require (
-	github.com/barpav/msg-sessions v0.0.0-20230828114848-7c2857180271
+	github.com/barpav/msg-sessions v0.0.0-20230906095335-0bc557b2205d
 	github.com/go-chi/chi/v5 v5.0.10
 	github.com/rabbitmq/amqp091-go v1.8.1
 	github.com/rs/zerolog v1.30.0
