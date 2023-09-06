@@ -23,6 +23,7 @@ type Authenticator interface {
 	ValidateSession(ctx context.Context, key, ip, agent string) (userId string, err error)
 }
 
+//go:generate mockery --name Storage
 type Storage interface {
 	AllocateNewFile(ctx context.Context, info *models.AllocatedFile) (id string, err error)
 	AllocatedFileInfo(ctx context.Context, id string) (info *models.AllocatedFile, err error)
