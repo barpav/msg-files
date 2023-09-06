@@ -12,12 +12,12 @@ const (
 	envVarPort = "MSG_STORAGE_PORT"
 )
 
-type Config struct {
+type config struct {
 	host string
 	port string
 }
 
-func (c *Config) Read() {
+func (c *config) Read() {
 	readSetting(envVarHost, defaultHost, &c.host)
 	readSetting(envVarPort, defaultPort, &c.port)
 }
