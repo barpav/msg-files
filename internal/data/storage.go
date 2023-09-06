@@ -13,7 +13,7 @@ import (
 )
 
 type Storage struct {
-	cfg            *Config
+	cfg            *config
 	client         *mongo.Client
 	db             *mongo.Database
 	allocatedFiles *mongo.Collection
@@ -30,7 +30,7 @@ const (
 )
 
 func (s *Storage) Open() (err error) {
-	s.cfg = &Config{}
+	s.cfg = &config{}
 	s.cfg.Read()
 
 	err = s.connectToDatabase()
