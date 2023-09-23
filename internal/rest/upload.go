@@ -54,6 +54,4 @@ func (s *Service) uploadNewFileContent(w http.ResponseWriter, r *http.Request) {
 		logAndReturnErrorWithIssue(w, r, err, "Failed to upload file content")
 		return
 	}
-
-	w.WriteHeader(http.StatusOK)
 }
